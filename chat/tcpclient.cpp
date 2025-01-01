@@ -78,7 +78,6 @@ void TcpClient::receiveFile()
 
     if (fileNameSize != 0 && bytesReceived >= (qint64) sizeof (qint64) * 2 + fileNameSize && bytesReceived < TotalBytes)
     {
-        qDebug() << "try to rad remaining data";
         bytesReceived += tcpClient_socket->bytesAvailable();
         inBlock = tcpClient_socket->readAll();
         fileInterface->write(inBlock);
