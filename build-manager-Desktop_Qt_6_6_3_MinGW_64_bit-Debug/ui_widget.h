@@ -27,7 +27,6 @@ QT_BEGIN_NAMESPACE
 class Ui_Widget
 {
 public:
-    QFontComboBox *fontComboBox;
     QToolButton *italicToolBtn;
     QToolButton *sendToolBtn;
     QToolButton *underlineToolBtn;
@@ -42,22 +41,13 @@ public:
     QPushButton *exitButton;
     QToolButton *clearToolBtn;
     QToolButton *saveToolBtn;
+    QFontComboBox *fontComboBox;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName("Widget");
         Widget->resize(925, 602);
-        fontComboBox = new QFontComboBox(Widget);
-        fontComboBox->setObjectName("fontComboBox");
-        fontComboBox->setGeometry(QRect(13, 341, 105, 21));
-        fontComboBox->setMinimumSize(QSize(60, 0));
-        fontComboBox->setMaximumSize(QSize(250, 16777215));
-        QFont font;
-        font.setFamilies({QString::fromUtf8("Arial")});
-        font.setPointSize(9);
-        fontComboBox->setFont(font);
-        fontComboBox->setEditable(false);
         italicToolBtn = new QToolButton(Widget);
         italicToolBtn->setObjectName("italicToolBtn");
         italicToolBtn->setGeometry(QRect(233, 341, 42, 21));
@@ -107,7 +97,10 @@ public:
         sizeComboBox->addItem(QString());
         sizeComboBox->addItem(QString());
         sizeComboBox->setObjectName("sizeComboBox");
-        sizeComboBox->setGeometry(QRect(125, 341, 47, 21));
+        sizeComboBox->setGeometry(QRect(140, 340, 47, 21));
+        QFont font;
+        font.setFamilies({QString::fromUtf8("Arial")});
+        font.setPointSize(9);
         sizeComboBox->setFont(font);
         userTableWidget = new QTableWidget(Widget);
         if (userTableWidget->columnCount() < 3)
@@ -142,6 +135,9 @@ public:
         saveToolBtn->setObjectName("saveToolBtn");
         saveToolBtn->setGeometry(QRect(431, 341, 42, 21));
         saveToolBtn->setIconSize(QSize(30, 30));
+        fontComboBox = new QFontComboBox(Widget);
+        fontComboBox->setObjectName("fontComboBox");
+        fontComboBox->setGeometry(QRect(10, 340, 121, 25));
 
         retranslateUi(Widget);
 
@@ -154,7 +150,6 @@ public:
     void retranslateUi(QWidget *Widget)
     {
         Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
-        fontComboBox->setCurrentText(QCoreApplication::translate("Widget", "\345\256\213\344\275\223", nullptr));
 #if QT_CONFIG(tooltip)
         italicToolBtn->setToolTip(QCoreApplication::translate("Widget", "\346\226\234\344\275\223", nullptr));
 #endif // QT_CONFIG(tooltip)

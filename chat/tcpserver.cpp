@@ -15,7 +15,7 @@ TcpServer::TcpServer(QWidget *parent) :
 
     tcpPort = 6666;
     tcpServer = new QTcpServer(this);
-    connect(tcpServer, &QTcpServer::newConnection, this, &TcpServer::sendMessage);
+    connect(tcpServer, &QTcpServer::newConnection, this, &TcpServer::transferFile);
 
     initServer();
 }
@@ -43,11 +43,11 @@ void TcpServer::initServer()
 
 void TcpServer::on_serverOpenBtn_clicked()
 {
-    fileName = QFileDialog::getOpenFileName(this);
-    if (!fileName.isEmpty())
+    selectedFile = QFileDialog::getOpenFileName(this);
+    if (!selectedFile.isEmpty())
     {
-        theFileName = fileName.right(fileName.size() - fileName.lastIndexOf('/') - 1);
-        ui->serverStatusLabel->setText(QString("要传送的文件为:%1 ").arg(theFileName));
+        fileName = selectedFile.right(selectedFile.size() - selectedFile.lastIndexOf('/') - 1);
+        ui->serverStatusLabel->setText(QString("要传送的文件为:%1 ").arg(fileName));
         ui->serverOpenBtn->setEnabled(false);
         ui->serverSendBtn->setEnabled(true);
     }
@@ -55,7 +55,7 @@ void TcpServer::on_serverOpenBtn_clicked()
 
 void TcpServer::on_serverSendBtn_clicked()
 {
-    emit sendFileName(theFileName);
+    emit sendfile(selectedFile);
     if (!tcpServer->listen(QHostAddress::Any, tcpPort))
     {
         qDebug() << tcpServer->errorString();
@@ -66,25 +66,25 @@ void TcpServer::on_serverSendBtn_clicked()
 
 }
 
-void TcpServer::sendMessage()
+void TcpServer::transferFile()
 {
     ui->serverSendBtn->setEnabled(false);
     server_socket = tcpServer->nextPendingConnection();
     connect(server_socket, &QTcpSocket::bytesWritten, this, &TcpServer::updateClientProgress);
-    ui->serverStatusLabel->setText(QString("开始传送文件 %1 !").arg(theFileName));
+    ui->serverStatusLabel->setText(QString("开始传送文件 %1 !").arg(fileName));
 
-    localFile = new QFile(fileName);
-    if (!localFile->open(QFile::ReadOnly))
+    selectedFile_interface = new QFile(selectedFile);
+    if (!selectedFile_interface->open(QFile::ReadOnly))
     {
-        QMessageBox::warning(this, "应用程序", QString("无法读取文件 %1:\n%2").arg(fileName).arg(localFile->errorString()));
+        QMessageBox::warning(this, "应用程序", QString("无法读取文件 %1:\n%2").arg(selectedFile, selectedFile_interface->errorString()));
         return;
     }
 
-    TotalBytes = localFile->size();
+    TotalBytes = selectedFile_interface->size();
     QDataStream sendOut(&outBlock, QIODevice::WriteOnly);
     sendOut.setVersion(QDataStream::Qt_5_15);
     time.start();
-    QString currentFile = fileName.right(fileName.size() - fileName.lastIndexOf('/') - 1);
+    QString currentFile = selectedFile.right(selectedFile.size() - selectedFile.lastIndexOf('/') - 1);
     sendOut << qint64(0) << qint64(0) << currentFile;
     TotalBytes += outBlock.size();
     sendOut.device()->seek(0);
@@ -100,13 +100,13 @@ void TcpServer::updateClientProgress(qint64 numBytes)
     bytesWritten += numBytes;
     if (bytesToWrite > 0)
     {
-        outBlock = localFile->read(qMin(bytesToWrite, payloadSize));
+        outBlock = selectedFile_interface->read(qMin(bytesToWrite, payloadSize));
         bytesToWrite -= server_socket->write(outBlock);
         outBlock.resize(0);
     }
     else
     {
-        localFile->close();
+        selectedFile_interface->close();
     }
     ui->progressBar->setMaximum(TotalBytes);
     ui->progressBar->setValue(bytesWritten);
@@ -119,9 +119,9 @@ void TcpServer::updateClientProgress(qint64 numBytes)
                                    .arg(TotalBytes / speed / 1000 - useTime / 1000, 0, 'f', 0));
     if (bytesWritten == TotalBytes)
     {
-        localFile->close();
+        selectedFile_interface->close();
         tcpServer->close();
-        ui->serverStatusLabel->setText(tr("传送文件 %1 成功").arg(theFileName));
+        ui->serverStatusLabel->setText(tr("传送文件 %1 成功").arg(fileName));
     }
 }
 
@@ -130,8 +130,8 @@ void TcpServer::on_serverCloseBtn_clicked()
     if (tcpServer->isListening())
     {
         tcpServer->close();
-        if (localFile->isOpen())
-            localFile->close();
+        if (selectedFile_interface->isOpen())
+            selectedFile_interface->close();
         server_socket->abort();
     }
     close();

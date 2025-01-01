@@ -42,7 +42,8 @@ constexpr auto qt_meta_stringdata_CLASSWidgetENDCLASS = QtMocHelpers::stringData
     "processPendingDatagrams",
     "",
     "on_sendButton_clicked",
-    "getFileName",
+    "sendfile",
+    "selectedFile",
     "on_sendToolBtn_clicked",
     "on_fontComboBox_currentFontChanged",
     "f",
@@ -62,28 +63,29 @@ constexpr auto qt_meta_stringdata_CLASSWidgetENDCLASS = QtMocHelpers::stringData
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSWidgetENDCLASS_t {
-    uint offsetsAndSizes[42];
+    uint offsetsAndSizes[44];
     char stringdata0[7];
     char stringdata1[24];
     char stringdata2[1];
     char stringdata3[22];
-    char stringdata4[12];
-    char stringdata5[23];
-    char stringdata6[35];
-    char stringdata7[2];
-    char stringdata8[36];
-    char stringdata9[6];
-    char stringdata10[23];
-    char stringdata11[8];
-    char stringdata12[25];
-    char stringdata13[28];
-    char stringdata14[24];
-    char stringdata15[21];
-    char stringdata16[16];
-    char stringdata17[7];
-    char stringdata18[23];
-    char stringdata19[24];
-    char stringdata20[22];
+    char stringdata4[9];
+    char stringdata5[13];
+    char stringdata6[23];
+    char stringdata7[35];
+    char stringdata8[2];
+    char stringdata9[36];
+    char stringdata10[6];
+    char stringdata11[23];
+    char stringdata12[8];
+    char stringdata13[25];
+    char stringdata14[28];
+    char stringdata15[24];
+    char stringdata16[21];
+    char stringdata17[16];
+    char stringdata18[7];
+    char stringdata19[23];
+    char stringdata20[24];
+    char stringdata21[22];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSWidgetENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -93,29 +95,31 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSWidgetENDCLASS_t qt_meta_string
         QT_MOC_LITERAL(7, 23),  // "processPendingDatagrams"
         QT_MOC_LITERAL(31, 0),  // ""
         QT_MOC_LITERAL(32, 21),  // "on_sendButton_clicked"
-        QT_MOC_LITERAL(54, 11),  // "getFileName"
-        QT_MOC_LITERAL(66, 22),  // "on_sendToolBtn_clicked"
-        QT_MOC_LITERAL(89, 34),  // "on_fontComboBox_currentFontCh..."
-        QT_MOC_LITERAL(124, 1),  // "f"
-        QT_MOC_LITERAL(126, 35),  // "on_sizeComboBox_currentIndexC..."
-        QT_MOC_LITERAL(162, 5),  // "index"
-        QT_MOC_LITERAL(168, 22),  // "on_boldToolBtn_clicked"
-        QT_MOC_LITERAL(191, 7),  // "checked"
-        QT_MOC_LITERAL(199, 24),  // "on_italicToolBtn_clicked"
-        QT_MOC_LITERAL(224, 27),  // "on_underlineToolBtn_clicked"
-        QT_MOC_LITERAL(252, 23),  // "on_colorToolBtn_clicked"
-        QT_MOC_LITERAL(276, 20),  // "currentFormatChanged"
-        QT_MOC_LITERAL(297, 15),  // "QTextCharFormat"
-        QT_MOC_LITERAL(313, 6),  // "format"
-        QT_MOC_LITERAL(320, 22),  // "on_saveToolBtn_clicked"
-        QT_MOC_LITERAL(343, 23),  // "on_clearToolBtn_clicked"
-        QT_MOC_LITERAL(367, 21)   // "on_exitButton_clicked"
+        QT_MOC_LITERAL(54, 8),  // "sendfile"
+        QT_MOC_LITERAL(63, 12),  // "selectedFile"
+        QT_MOC_LITERAL(76, 22),  // "on_sendToolBtn_clicked"
+        QT_MOC_LITERAL(99, 34),  // "on_fontComboBox_currentFontCh..."
+        QT_MOC_LITERAL(134, 1),  // "f"
+        QT_MOC_LITERAL(136, 35),  // "on_sizeComboBox_currentIndexC..."
+        QT_MOC_LITERAL(172, 5),  // "index"
+        QT_MOC_LITERAL(178, 22),  // "on_boldToolBtn_clicked"
+        QT_MOC_LITERAL(201, 7),  // "checked"
+        QT_MOC_LITERAL(209, 24),  // "on_italicToolBtn_clicked"
+        QT_MOC_LITERAL(234, 27),  // "on_underlineToolBtn_clicked"
+        QT_MOC_LITERAL(262, 23),  // "on_colorToolBtn_clicked"
+        QT_MOC_LITERAL(286, 20),  // "currentFormatChanged"
+        QT_MOC_LITERAL(307, 15),  // "QTextCharFormat"
+        QT_MOC_LITERAL(323, 6),  // "format"
+        QT_MOC_LITERAL(330, 22),  // "on_saveToolBtn_clicked"
+        QT_MOC_LITERAL(353, 23),  // "on_clearToolBtn_clicked"
+        QT_MOC_LITERAL(377, 21)   // "on_exitButton_clicked"
     },
     "Widget",
     "processPendingDatagrams",
     "",
     "on_sendButton_clicked",
-    "getFileName",
+    "sendfile",
+    "selectedFile",
     "on_sendToolBtn_clicked",
     "on_fontComboBox_currentFontChanged",
     "f",
@@ -154,30 +158,30 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSWidgetENDCLASS[] = {
        1,    0,   98,    2, 0x08,    1 /* Private */,
        3,    0,   99,    2, 0x08,    2 /* Private */,
        4,    1,  100,    2, 0x08,    3 /* Private */,
-       5,    0,  103,    2, 0x08,    5 /* Private */,
-       6,    1,  104,    2, 0x08,    6 /* Private */,
-       8,    1,  107,    2, 0x08,    8 /* Private */,
-      10,    1,  110,    2, 0x08,   10 /* Private */,
-      12,    1,  113,    2, 0x08,   12 /* Private */,
-      13,    1,  116,    2, 0x08,   14 /* Private */,
-      14,    0,  119,    2, 0x08,   16 /* Private */,
-      15,    1,  120,    2, 0x08,   17 /* Private */,
-      18,    0,  123,    2, 0x08,   19 /* Private */,
-      19,    0,  124,    2, 0x08,   20 /* Private */,
-      20,    0,  125,    2, 0x08,   21 /* Private */,
+       6,    0,  103,    2, 0x08,    5 /* Private */,
+       7,    1,  104,    2, 0x08,    6 /* Private */,
+       9,    1,  107,    2, 0x08,    8 /* Private */,
+      11,    1,  110,    2, 0x08,   10 /* Private */,
+      13,    1,  113,    2, 0x08,   12 /* Private */,
+      14,    1,  116,    2, 0x08,   14 /* Private */,
+      15,    0,  119,    2, 0x08,   16 /* Private */,
+      16,    1,  120,    2, 0x08,   17 /* Private */,
+      19,    0,  123,    2, 0x08,   19 /* Private */,
+      20,    0,  124,    2, 0x08,   20 /* Private */,
+      21,    0,  125,    2, 0x08,   21 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void, QMetaType::QString,    5,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QFont,    7,
-    QMetaType::Void, QMetaType::Int,    9,
-    QMetaType::Void, QMetaType::Bool,   11,
-    QMetaType::Void, QMetaType::Bool,   11,
-    QMetaType::Void, QMetaType::Bool,   11,
+    QMetaType::Void, QMetaType::QFont,    8,
+    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::Bool,   12,
+    QMetaType::Void, QMetaType::Bool,   12,
+    QMetaType::Void, QMetaType::Bool,   12,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 16,   17,
+    QMetaType::Void, 0x80000000 | 17,   18,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -198,7 +202,7 @@ Q_CONSTINIT const QMetaObject Widget::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_sendButton_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'getFileName'
+        // method 'sendfile'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'on_sendToolBtn_clicked'
@@ -241,7 +245,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         switch (_id) {
         case 0: _t->processPendingDatagrams(); break;
         case 1: _t->on_sendButton_clicked(); break;
-        case 2: _t->getFileName((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 2: _t->sendfile((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 3: _t->on_sendToolBtn_clicked(); break;
         case 4: _t->on_fontComboBox_currentFontChanged((*reinterpret_cast< std::add_pointer_t<QFont>>(_a[1]))); break;
         case 5: _t->on_sizeComboBox_currentIndexChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;

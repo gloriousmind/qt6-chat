@@ -11,7 +11,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
 
-enum MessageType {Message, NewParticipant, ParticipantLeft, FileName, Refuse};
+enum MessageType : int32_t {Message, NewParticipant, ParticipantLeft, FileName, Refuse};
 
 class Widget : public QWidget
 {
@@ -31,8 +31,8 @@ protected:
     QString getUserName();
     QString getMessage();
 
-    void hasPendingFile(QString userName, QString serverAddress, QString clientAddress, QString fileName);
-    bool saveFile(const QString & fileName);
+    void processPendingFile(QString userName, QString serverAddress, QString clientAddress, QString selectedFile);
+    bool saveFile(const QString & selectedFile);
 
     void closeEvent(QCloseEvent *);
 
@@ -41,7 +41,7 @@ private:
     QUdpSocket * udpSocket;
     quint16 port;
 
-    QString fileName;
+    QString selectedFile_send;
     TcpServer * server;
 
     QColor color;
@@ -50,7 +50,7 @@ private slots:
     void processPendingDatagrams();
     void on_sendButton_clicked();
 
-    void getFileName(QString);
+    void sendfile(QString selectedFile);
     void on_sendToolBtn_clicked();
 
     void on_fontComboBox_currentFontChanged(const QFont &f);

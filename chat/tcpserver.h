@@ -31,9 +31,9 @@ private:
 
     qint16 tcpPort;
     QTcpServer * tcpServer;
+    QString selectedFile;
     QString fileName;
-    QString theFileName;
-    QFile * localFile;
+    QFile * selectedFile_interface;
 
     qint64 TotalBytes;
     qint64 bytesWritten;
@@ -46,7 +46,7 @@ private:
     QElapsedTimer time;
 
 private slots:
-    void sendMessage();
+    void transferFile();
     void updateClientProgress(qint64 numBytes);
 
     void on_serverOpenBtn_clicked();
@@ -54,7 +54,7 @@ private slots:
     void on_serverCloseBtn_clicked();
 
 signals:
-    void sendFileName(QString fileName);
+    void sendfile(QString selectedFile);
 };
 
 #endif // TCPSERVER_H

@@ -14,7 +14,7 @@ TcpClient::TcpClient(QWidget *parent) :
 
     tcpClient_socket = new QTcpSocket(this);
     tcpPort = 6666;
-    connect(tcpClient_socket, &QTcpSocket::readyRead, this, &TcpClient::readMessage);
+    connect(tcpClient_socket, &QTcpSocket::readyRead, this, &TcpClient::receiveFile);
     connect(tcpClient_socket, &QAbstractSocket::errorOccurred, this, &TcpClient::displayError);
 }
 
@@ -23,13 +23,13 @@ TcpClient::~TcpClient()
     delete ui;
 }
 
-void TcpClient::setFileName(QString fileName)
+void TcpClient::set_fileInterface(QString selectedFile)
 {
-    localFile = new QFile(fileName);
+    fileInterface = new QFile(selectedFile);
 }
 
 
-void TcpClient::setHostAddress(QHostAddress address)
+void TcpClient::initialize_connection(QHostAddress address)
 {
     hostAddress = address;
     newConnect();
@@ -43,8 +43,9 @@ void TcpClient::newConnect()
     time.start();
 }
 
-void TcpClient::readMessage()
+void TcpClient::receiveFile()
 {
+    qDebug() << tcpClient_socket->bytesAvailable();
     QDataStream in(tcpClient_socket);
     in.setVersion(QDataStream::Qt_5_15);
 
@@ -66,9 +67,9 @@ void TcpClient::readMessage()
             in >> fileName;
             bytesReceived += fileNameSize;
 
-            if (!localFile->open(QFile::WriteOnly))
+            if (!fileInterface->open(QFile::WriteOnly))
             {
-                QMessageBox::warning(this, "应用程序", QString("无法读取文件 %1:\n%2.").arg(fileName).arg(localFile->errorString()));
+                QMessageBox::warning(this, "应用程序", QString("无法读取文件 %1:\n%2.").arg(fileName).arg(fileInterface->errorString()));
             }
             else
                 return;
@@ -77,9 +78,10 @@ void TcpClient::readMessage()
 
     if (fileNameSize != 0 && bytesReceived >= (qint64) sizeof (qint64) * 2 + fileNameSize && bytesReceived < TotalBytes)
     {
+        qDebug() << "try to rad remaining data";
         bytesReceived += tcpClient_socket->bytesAvailable();
         inBlock = tcpClient_socket->readAll();
-        localFile->write(inBlock);
+        fileInterface->write(inBlock);
         inBlock.resize(0);
     }
 
@@ -95,7 +97,7 @@ void TcpClient::readMessage()
                                       .arg(TotalBytes / speed / 1000 - useTime / 1000, 0, 'f', 0));
     if (bytesReceived == TotalBytes)
     {
-        localFile->close();
+        fileInterface->close();
         tcpClient_socket->close();
         ui->tcpClientStatusLabel->setText(QString("接收文件 %1 完毕").arg(fileName));
     }
@@ -114,15 +116,15 @@ void TcpClient::displayError(QAbstractSocket::SocketError socketError)
 void TcpClient::on_tcpClientCancleBtn_clicked()
 {
     tcpClient_socket->abort();
-    if (localFile->isOpen())
-        localFile->close();
+    if (fileInterface->isOpen())
+        fileInterface->close();
 }
 
 void TcpClient::on_tcpClientCloseBtn_clicked()
 {
     tcpClient_socket->abort();
-    if (localFile->isOpen())
-        localFile->close();
+    if (fileInterface->isOpen())
+        fileInterface->close();
     close();
 }
 

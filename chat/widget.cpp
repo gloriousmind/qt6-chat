@@ -6,7 +6,7 @@
 #include <QScrollBar>
 #include <QDateTime>
 #include <QNetworkInterface>
-#include <QProcess>
+#include <QProcessEnvironment>
 #include "tcpclient.h"
 #include "tcpserver.h"
 #include <QFileDialog>
@@ -35,7 +35,7 @@ Widget::Widget(QWidget *parent)
     sendMessage(NewParticipant, getIP());
 
     server = new TcpServer(this);
-    connect(server, &TcpServer::sendFileName, this, &Widget::getFileName);
+    connect(server, &TcpServer::sendfile, this, &Widget::sendfile);
 
     connect(ui->messageTextEdit, &QTextEdit::currentCharFormatChanged, this, &Widget::currentFormatChanged);
 }
@@ -62,7 +62,7 @@ QString Widget::getUserName()
 {
     QStringList envVariables;
     envVariables << "USERNAME.*" << "USER.*" << "USERDOMAIN.*" << "HOSTNAME.*" << "DOMAINNAME.*";
-    QStringList environment = QProcess::systemEnvironment();
+    QStringList environment = QProcessEnvironment::systemEnvironment().toStringList();
     foreach (QString str, envVariables)
     {
         int index = environment.indexOf(QRegularExpression(str));
@@ -88,7 +88,7 @@ QString Widget::getMessage()
     return msg;
 }
 
-//使用Udp广播发送信息
+//使用Udpsocket发送信息
 void Widget::sendMessage(MessageType type, QString address)
 {
     QByteArray data;
@@ -120,8 +120,7 @@ void Widget::sendMessage(MessageType type, QString address)
         {
             int row = ui->userTableWidget->currentRow();
             QString receiver_ip = ui->userTableWidget->item(row, 2)->text();
-            QString sender_ip = address;
-            out << sender_ip << receiver_ip << fileName;
+            out << address << receiver_ip << selectedFile_send;
             break;
         }
         case Refuse:
@@ -133,7 +132,7 @@ void Widget::sendMessage(MessageType type, QString address)
     udpSocket->writeDatagram(data, data.length(), QHostAddress::Broadcast, port);
 }
 
-//处理新用户加入
+//收到新用户加入消息如何处理
 void Widget::newParticipant(QString userName, QString localHostName, QString ipAddress)
 {
     bool isEmpty = ui->userTableWidget->findItems(localHostName, Qt::MatchExactly).isEmpty();
@@ -156,31 +155,33 @@ void Widget::newParticipant(QString userName, QString localHostName, QString ipA
     }
 }
 
-//处理用户离开
+//收到用户离开消息如何处理
 void Widget::participantLeft(QString userName, QString localHostName, QString time)
 {
-    int rowNum = ui->userTableWidget->findItems(localHostName, Qt::MatchExactly).first()->row();
+    QList<QTableWidgetItem *> list = ui->userTableWidget->findItems(localHostName, Qt::MatchExactly);
+    int rowNum = list.first()->row();
     ui->userTableWidget->removeRow(rowNum);
     ui->messageBrowser->setTextColor(Qt::gray);
     ui->messageBrowser->setCurrentFont(QFont("Times New Roman", 10));
-    ui->messageBrowser->append(QString("%1 于 %2 离开!").arg(userName).arg(time));
+    ui->messageBrowser->append(QString("%1 于 %2 离开!").arg(userName, time));
     ui->userNumLabel->setText(QString("在线人数: %1").arg(ui->userTableWidget->rowCount()));
 }
 
-void Widget::hasPendingFile(QString userName, QString serverAddress, QString clientAddress, QString fileName)
+//收到发送文件请求消息的处理
+void Widget::processPendingFile(QString userName, QString serverAddress, QString clientAddress, QString selectedFile)
 {
     QString ipAddress = getIP();
     if (ipAddress == clientAddress)
     {
-        int btn = QMessageBox::information(this, "接受文件", QString("来自%1(%2)的文件:%3, 是否接收?").arg(userName).arg(serverAddress).arg(fileName), QMessageBox::Yes, QMessageBox::No);
+        int btn = QMessageBox::information(this, "接受文件", QString("来自%1(%2)的文件:%3, 是否接收?").arg(userName, serverAddress, selectedFile), QMessageBox::Yes, QMessageBox::No);
         if (btn == QMessageBox::Yes)
         {
-            QString name = QFileDialog::getSaveFileName(0, "保存文件", fileName);
-            if (!name.isEmpty())
+            QString selectedFile_save = QFileDialog::getSaveFileName(0, "保存文件", selectedFile);
+            if (!selectedFile_save.isEmpty())
             {
                 TcpClient * client = new TcpClient(this);
-                client->setFileName(name);
-                client->setHostAddress(QHostAddress(serverAddress));
+                client->set_fileInterface(selectedFile_save);
+                client->initialize_connection(QHostAddress(serverAddress));
                 client->show();
             }
         }
@@ -226,9 +227,9 @@ void Widget::processPendingDatagrams()
             case FileName:
             {
                 in >> userName >> localHostName >> ipAddress;
-                QString clientAddress, fileName;
-                in >> clientAddress >> fileName;
-                hasPendingFile(userName, ipAddress, clientAddress, fileName);
+                QString clientAddress, selectedFile_receive;
+                in >> clientAddress >> selectedFile_receive;
+                processPendingFile(userName, ipAddress, clientAddress, selectedFile_receive);
                 break;
             }
 
@@ -252,9 +253,9 @@ void Widget::on_sendButton_clicked()
     sendMessage(Message, getIP());
 }
 
-void Widget::getFileName(QString name)
+void Widget::sendfile(QString selectedFile)
 {
-    fileName = name;
+    selectedFile_send = selectedFile;
     sendMessage(FileName,getIP());
 }
 
@@ -331,18 +332,18 @@ void Widget::on_saveToolBtn_clicked()
     }
     else
     {
-        QString fileName = QFileDialog::getSaveFileName(this, "保存聊天记录", "聊天记录.txt", "Text File(*.txt);;All File(*.*)");
-        if (!fileName.isEmpty())
-            saveFile(fileName);
+        QString localFile = QFileDialog::getSaveFileName(this, "保存聊天记录", "聊天记录.txt", "Text File(*.txt);;All File(*.*)");
+        if (!localFile.isEmpty())
+            saveFile(localFile);
     }
 }
 
-bool Widget::saveFile(const QString & fileName)
+bool Widget::saveFile(const QString & selectedFile)
 {
-    QFile file(fileName);
+    QFile file(selectedFile);
     if (!file.open(QFile::WriteOnly | QFile::Text))
     {
-        QMessageBox::warning(this, "保存文件", QString("无法保存文件 %1:\n %2").arg(fileName).arg(file.errorString()));
+        QMessageBox::warning(this, "保存文件", QString("无法保存文件 %1:\n %2").arg(selectedFile, file.errorString()));
         return false;
     }
     QTextStream out(&file);

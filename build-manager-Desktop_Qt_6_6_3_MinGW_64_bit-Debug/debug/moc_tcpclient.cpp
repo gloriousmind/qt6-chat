@@ -43,7 +43,7 @@ constexpr auto qt_meta_stringdata_CLASSTcpClientENDCLASS = QtMocHelpers::stringD
     "",
     "on_tcpClientCloseBtn_clicked",
     "newConnect",
-    "readMessage",
+    "receiveFile",
     "displayError",
     "QAbstractSocket::SocketError"
 );
@@ -68,7 +68,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTcpClientENDCLASS_t qt_meta_str
         QT_MOC_LITERAL(40, 0),  // ""
         QT_MOC_LITERAL(41, 28),  // "on_tcpClientCloseBtn_clicked"
         QT_MOC_LITERAL(70, 10),  // "newConnect"
-        QT_MOC_LITERAL(81, 11),  // "readMessage"
+        QT_MOC_LITERAL(81, 11),  // "receiveFile"
         QT_MOC_LITERAL(93, 12),  // "displayError"
         QT_MOC_LITERAL(106, 28)   // "QAbstractSocket::SocketError"
     },
@@ -77,7 +77,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTcpClientENDCLASS_t qt_meta_str
     "",
     "on_tcpClientCloseBtn_clicked",
     "newConnect",
-    "readMessage",
+    "receiveFile",
     "displayError",
     "QAbstractSocket::SocketError"
 };
@@ -130,7 +130,7 @@ Q_CONSTINIT const QMetaObject TcpClient::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'newConnect'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'readMessage'
+        // method 'receiveFile'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'displayError'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -148,7 +148,7 @@ void TcpClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 0: _t->on_tcpClientCancleBtn_clicked(); break;
         case 1: _t->on_tcpClientCloseBtn_clicked(); break;
         case 2: _t->newConnect(); break;
-        case 3: _t->readMessage(); break;
+        case 3: _t->receiveFile(); break;
         case 4: _t->displayError((*reinterpret_cast< std::add_pointer_t<QAbstractSocket::SocketError>>(_a[1]))); break;
         default: ;
         }

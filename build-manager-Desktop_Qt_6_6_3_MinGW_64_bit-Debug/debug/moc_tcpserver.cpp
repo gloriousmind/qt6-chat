@@ -39,10 +39,10 @@ namespace {
 struct qt_meta_stringdata_CLASSTcpServerENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSTcpServerENDCLASS = QtMocHelpers::stringData(
     "TcpServer",
-    "sendFileName",
+    "sendfile",
     "",
-    "fileName",
-    "sendMessage",
+    "selectedFile",
+    "transferFile",
     "updateClientProgress",
     "numBytes",
     "on_serverOpenBtn_clicked",
@@ -53,10 +53,10 @@ constexpr auto qt_meta_stringdata_CLASSTcpServerENDCLASS = QtMocHelpers::stringD
 struct qt_meta_stringdata_CLASSTcpServerENDCLASS_t {
     uint offsetsAndSizes[20];
     char stringdata0[10];
-    char stringdata1[13];
+    char stringdata1[9];
     char stringdata2[1];
-    char stringdata3[9];
-    char stringdata4[12];
+    char stringdata3[13];
+    char stringdata4[13];
     char stringdata5[21];
     char stringdata6[9];
     char stringdata7[25];
@@ -68,21 +68,21 @@ struct qt_meta_stringdata_CLASSTcpServerENDCLASS_t {
 Q_CONSTINIT static const qt_meta_stringdata_CLASSTcpServerENDCLASS_t qt_meta_stringdata_CLASSTcpServerENDCLASS = {
     {
         QT_MOC_LITERAL(0, 9),  // "TcpServer"
-        QT_MOC_LITERAL(10, 12),  // "sendFileName"
-        QT_MOC_LITERAL(23, 0),  // ""
-        QT_MOC_LITERAL(24, 8),  // "fileName"
-        QT_MOC_LITERAL(33, 11),  // "sendMessage"
-        QT_MOC_LITERAL(45, 20),  // "updateClientProgress"
-        QT_MOC_LITERAL(66, 8),  // "numBytes"
-        QT_MOC_LITERAL(75, 24),  // "on_serverOpenBtn_clicked"
-        QT_MOC_LITERAL(100, 24),  // "on_serverSendBtn_clicked"
-        QT_MOC_LITERAL(125, 25)   // "on_serverCloseBtn_clicked"
+        QT_MOC_LITERAL(10, 8),  // "sendfile"
+        QT_MOC_LITERAL(19, 0),  // ""
+        QT_MOC_LITERAL(20, 12),  // "selectedFile"
+        QT_MOC_LITERAL(33, 12),  // "transferFile"
+        QT_MOC_LITERAL(46, 20),  // "updateClientProgress"
+        QT_MOC_LITERAL(67, 8),  // "numBytes"
+        QT_MOC_LITERAL(76, 24),  // "on_serverOpenBtn_clicked"
+        QT_MOC_LITERAL(101, 24),  // "on_serverSendBtn_clicked"
+        QT_MOC_LITERAL(126, 25)   // "on_serverCloseBtn_clicked"
     },
     "TcpServer",
-    "sendFileName",
+    "sendfile",
     "",
-    "fileName",
-    "sendMessage",
+    "selectedFile",
+    "transferFile",
     "updateClientProgress",
     "numBytes",
     "on_serverOpenBtn_clicked",
@@ -138,10 +138,10 @@ Q_CONSTINIT const QMetaObject TcpServer::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSTcpServerENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<TcpServer, std::true_type>,
-        // method 'sendFileName'
+        // method 'sendfile'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        // method 'sendMessage'
+        // method 'transferFile'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'updateClientProgress'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -162,8 +162,8 @@ void TcpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         auto *_t = static_cast<TcpServer *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->sendFileName((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 1: _t->sendMessage(); break;
+        case 0: _t->sendfile((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 1: _t->transferFile(); break;
         case 2: _t->updateClientProgress((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
         case 3: _t->on_serverOpenBtn_clicked(); break;
         case 4: _t->on_serverSendBtn_clicked(); break;
@@ -174,7 +174,7 @@ void TcpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (TcpServer::*)(QString );
-            if (_t _q_method = &TcpServer::sendFileName; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &TcpServer::sendfile; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
@@ -213,7 +213,7 @@ int TcpServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void TcpServer::sendFileName(QString _t1)
+void TcpServer::sendfile(QString _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

@@ -19,8 +19,8 @@ public:
     explicit TcpClient(QWidget *parent = nullptr);
     ~TcpClient();
 
-    void setHostAddress(QHostAddress address);
-    void setFileName(QString fileName);
+    void initialize_connection(QHostAddress address);
+    void set_fileInterface(QString selectedFile);
 
 protected:
     void closeEvent(QCloseEvent *);
@@ -30,7 +30,7 @@ private slots:
     void on_tcpClientCloseBtn_clicked();
 
     void newConnect();
-    void readMessage();
+    void receiveFile();
     void displayError(QAbstractSocket::SocketError);
 
 private:
@@ -46,7 +46,7 @@ private:
     qint64 bytesToReceive;
     qint64 fileNameSize;
     QString fileName;
-    QFile * localFile;
+    QFile * fileInterface;
     QByteArray inBlock;
 
     QElapsedTimer time;

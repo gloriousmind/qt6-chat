@@ -13,40 +13,6 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QFontComboBox" name="fontComboBox">
-   <property name="geometry">
-    <rect>
-     <x>13</x>
-     <y>341</y>
-     <width>105</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>60</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>250</width>
-     <height>16777215</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Arial</family>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="editable">
-    <bool>false</bool>
-   </property>
-   <property name="currentText">
-    <string>宋体</string>
-   </property>
-  </widget>
   <widget class="QToolButton" name="italicToolBtn">
    <property name="geometry">
     <rect>
@@ -205,8 +171,8 @@
   <widget class="QComboBox" name="sizeComboBox">
    <property name="geometry">
     <rect>
-     <x>125</x>
-     <y>341</y>
+     <x>140</x>
+     <y>340</y>
      <width>47</width>
      <height>21</height>
     </rect>
@@ -414,6 +380,16 @@
      <width>30</width>
      <height>30</height>
     </size>
+   </property>
+  </widget>
+  <widget class="QFontComboBox" name="fontComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>340</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
    </property>
   </widget>
  </widget>
